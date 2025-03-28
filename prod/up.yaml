@@ -1,11 +1,21 @@
----
-- hosts: localhost
+
+- name: Deploy Gitea and MySQL in Production
+  hosts: localhost
   tasks:
-  - name: "Install kubernetes python package"
-    pip:
-      name: kubernetes
-      state: present
-  - name: install mysql
-    kubernetes.core.k8s:
-      state: present
-      src: mysql.yaml
+    - name: "Install Kubernetes Python package"
+      pip:
+        name: kubernetes
+        state: present
+
+    - name: Deploy MySQL
+      kubernetes.core.k8s:
+        state: present
+        src: mysql.yaml
+
+    - name: Deploy Gitea using Helm
+      kubernetes.core.helm:
+        name: gitea
+        chart_ref: gitea/gitea
+        release_namespace: default
+        values_files:
+          - values.yaml

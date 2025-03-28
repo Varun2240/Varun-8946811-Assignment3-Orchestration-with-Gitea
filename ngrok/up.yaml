@@ -1,0 +1,19 @@
+---
+- name: Start Ngrok Tunnel for Gitea
+  hosts: localhost
+  tasks:
+    - name: Forward Gitea service to local port
+      ansible.builtin.command: kubectl port-forward svc/gitea-http 3000:3000
+      async: 3600
+      poll: 0
+      register: port_forward
+
+    - name: Start Ngrok for Gitea
+      ansible.builtin.command: ngrok http 3000
+      async: 3600
+      poll: 0
+      register: ngrok_start
+
+    - name: Display Ngrok URL (For Reference)
+      debug:
+        msg: "Ngrok is running. Check your public Gitea URL at https://dashboard.ngrok.com/status/tunnels"

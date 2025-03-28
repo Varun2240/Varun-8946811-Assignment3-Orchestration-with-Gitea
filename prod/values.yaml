@@ -1,0 +1,11 @@
+gitea:
+  database:
+    type: mysql
+    host: mysql.default.svc.cluster.local:3306
+    name: gitea
+    username: gitea
+    password: "Varun@678"  
+  persistence:
+    enabled: true
+    size: 20Gi
+
