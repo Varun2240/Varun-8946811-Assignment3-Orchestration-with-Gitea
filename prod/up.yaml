@@ -19,3 +19,4 @@
         release_namespace: default
         values_files:
           - values.yaml
+lsof -i :3000
